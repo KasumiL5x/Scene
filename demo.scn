@@ -1,0 +1,190 @@
+// |-[scene]
+// |---[resources]
+// |-----[texture]
+// |-------(file: String.  The file to use for this texture)
+// |-------(name: String.  The name used to refer to this texture)
+// |-----[mesh]
+// |-------(file: String.  The file to use for this mesh)
+// |-------(name: String.  The name used to refer to this mesh)
+// |-----[material]
+// |-------(name: String.  Identifier for the material; must be unique)
+// |-------(color: Vec3.  R,G,B; the base color of the material)
+// |-------(specSize: Float.  Size of the specular highlight)
+// |-------(diffuseTex: String.  The name of the texture to use)
+// |-------(normalTex: String.  The name of the Texture to use)
+// |---[objects]
+// |-----[obj]
+// |-------(name: String.  Identifier for the object; must be unique)
+// |-------(position: Vec3.  X,Y,Z)
+// |-------(orientation: Vec3.  X,Y,Z)
+// |-------(scale: Vec3.  X,Y,Z)
+// |-------(mesh: String.  The name of the mesh to use.  Stored as the index of the respective Mesh)
+// |-------(material: String.  The name of the material to use.  Stored as the index of the respective Material)
+// |---[lights]
+// |-----[light]
+// |-------(type: point, spot, directional.  The type of light source)
+// |-------(diffuseColor: Vec3.  R,G,B; the color used for diffuse lighting)
+// |-------(diffuseIntensity: Float.  The intensity of the diffuseColor)
+// |-------(specularColor: Vec3.  R,G,B; the color used for specular lighting)
+// |-------(specularIntensity: Float.  The intensity of the specularColor)
+// |-------(position: Vec3.  The position of the light in 3d space.  Doesn't apply to directional lights)
+// |-------(range: Float.  The range the light can reach.  Doesn't apply to directional lights)
+// |-------(direction: Vec3.  The direction of the light.  Doesn't apply to point lights)
+// |-------(shadows: Boolean.  If the light casts shadows or not)
+// |-------(shadowBias: Float.  The bias used during shadow mapping)
+// |-------(coneInnerAngle: Float.  The inner angle of the cone.  For spotlights only)
+// |-------(coneOuterAngle: Float.  The outer angle of the cone.  For spotlights only)
+// 
+// Example:
+// 
+// [scene]
+// 
+//   [resources]
+//     [texture]
+//       file = textures/cube_d.png
+//       name = cubeDiffuseTex
+//     [/texture]
+// 
+//     [texture]
+//       file = textures/cube_n.png
+//       name = cubeNormalTex
+//     [/texture]
+// 
+//     [mesh]
+//       file = models/cube.obj
+//       name = cubeMesh
+//     [/mesh]
+//
+//       [material]
+//         name           = cube_material
+//         color          = 1,1,1
+//         specSize   = 64
+//         diffuseTex = cubeDiffuseTex (becomes 0)
+//         normalTex  = cubeNormalTex (becomes 1)
+//       [/material]
+//   [/resources]
+// 
+//   [objects]
+//     [obj]
+//       name        = cube
+//       position    = 0,0,0
+//       orientation = 0,0,0
+//       scale       = 1,1,1
+//       mesh        = cubeMesh (becomes 0)
+//       material    = cube_material (becomes 0)
+//     [/obj]
+//   [/objects]
+//
+//   [lights]
+//     [light]
+//       type              = spot
+//       diffuseColor      = 1,1,1
+//       diffuseIntensity  = 1.0
+//       specularColor     = 1,1,1
+//       specularIntensity = 1.0
+//       position          = 0,0,0
+//       range             = 100.0
+//       direction         = 0,-1,0
+//       shadows           = true
+//       shadowBias        = 0.000001
+//       coneAngle         = 45.0
+//     [/light]
+//   [/lights]
+//
+// [/scene]
+
+
+[scene]
+  [resources]
+    [texture]
+      file = test/dirt_d.png
+      name = dirtDiffuse
+    [/texture]
+
+    [texture]
+      file = test/dirt_n.png
+      name = dirtNormal
+    [/texture]
+
+    [mesh]
+      file = test/shack.obj
+      name = shackMesh
+    [/mesh]
+
+    [mesh]
+      file = test/ground.obj
+      name = groundMesh
+    [/mesh]
+
+    [material]
+      name       = plain_material
+      color      = 1,1,1
+      specSize   = 64
+    [/material]
+
+    [material]
+      name       = ground_material
+      color      = 1,1,1
+      specSize   = 64
+      diffuseTex = dirtDiffuse
+      normalTex  = dirtNormal
+    [/material]
+  [/resources]
+
+  [objects]
+    [obj]
+      name        = shack
+      position    = 0,0,0
+      orientation = 0,0,0
+      scale       = 1,1,1
+      mesh        = shackMesh
+      material    = plain_material
+    [/obj]
+
+    [obj]
+      name        = ground
+      position    = 0,0,0
+      orientation = 0,0,0
+      scale       = 1,1,1
+      mesh        = groundMesh
+      material    = ground_material
+    [/obj]
+  [/objects]
+
+  [lights]
+    [light]
+      type              = directional
+      diffuseColor      = 1,1,1
+      diffuseIntensity  = 1.0
+      specularColor     = 1,1,1
+      specularIntensity = 1.0
+      direction         = -0.6,-0.48,-0.48
+    [/light]
+
+    [light]
+      type              = point
+      diffuseColor      = 1,0,0
+      diffuseIntensity  = 1.0
+      specularColor     = 1,1,1
+      specularIntensity = 0.125
+      position          = 0,3,0
+      range             = 5.0
+    [/light]
+
+    [light]
+      type              = spot
+      diffuseColor      = 1,1,1
+      diffuseIntensity  = 1.0
+      specularColor     = 1,1,1
+      specularIntensity = 1.0
+      position          = 17,6,0
+      range             = 100.0
+      direction         = 0,-1,0
+      coneInnerAngle    = 10.0
+      coneOuterAngle    = 12.0
+      shadow            = true
+      shadowBias        = 0.00001
+    [/light]
+
+  [/lights]
+[/scene]

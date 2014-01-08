@@ -1,0 +1,4 @@
+Scene
+======
+
+Scene is a custom 3d scene parser intended for use with graphical demos.  It was created to plug-and-play into graphical demos to save having to hardcode scenes when testing.  It, along with the string utilities functions, are not guaranteed to be bug free.  For an example scene, including the complete syntax, see 'demo.scn.'
